@@ -1,40 +1,51 @@
 let elementIDObj = {};
 let querySelected = {};
 
-function memoizeID(id){
-  
+function memoizeID(id){  
   if(elementIDObj.hasOwnProperty(id)){
-    console.log('its there already!');
     return elementIDObj[id];
   }
   else{
-    console.log('this should have logged it');
-
     elementIDObj[id] = document.getElementById(id);
-    console.log('is it logged?', elementIDObj[id]);
-
     return elementIDObj[id];    
   }
-
 }
 
 function memoizeQuery(element){
-
   if(querySelected.hasOwnProperty(element)){
-    console.log('its there already!');
     return querySelected[element];
   }
   else{
-    console.log('this should have logged it');
-
-    querySelected[element] = document.querySelector(element);
-    console.log('is it logged?', querySelected[element]);
-
-    return querySelected[element];    
+    return querySelected[element] = document.querySelector(element); 
   }
+}
+
+//ORRR RETURN A FUNCTION THAT DOES THE WORK:
+//THIS WAY THE CACHE OBJECT CAN BE STORED WITHIN THE FUNCTION ONLY
+//AND IT MAKES THE FUNCTION MORE SECURE/PRIVATE.
+
+// function memoizeID(id){
+//   var cache = {};
+//   return function(id){
+//     if(cache.hasOwnProperty(id)){
+//       return cache[id];
+//     }else{
+//       return cache[id] = document.getElementById(id);
+//     }
+//   };
+// }
 
 
-};
+// function memoizeQuery(){
+//   var cache = {};
+//   return function(sel){
+//     if(cache.hasOwnProperty(sel)){
+//       return cache[sel];
+//     }else{
+//       return cache[sel] = document.querySelector(sel);
+//     }
+//   };
+// }
 
 module.exports = {
   memoizeID: memoizeID,
